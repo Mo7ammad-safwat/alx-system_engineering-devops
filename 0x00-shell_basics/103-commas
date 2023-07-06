@@ -1,1 +1,2 @@
-ls -1pF | grep -v / | sort -k1,1n -k1,1 | sed 's/$/,/' | tr -d '\n' && ls -dpF .*/ | sort -k1,1n -k1,1 | sed 's/$/,/' | tr -d '\n' && echo
+#!/bin/bash
+ls -1pF | grep -v / | sort -k1,1n -k1,1 | sed 's/$/,/' | tr -d 'n' && ls -dpF .*/ | sort -k1,1n -k1,1 | sed 's/$/,/' | tr -d 'n' && echo
