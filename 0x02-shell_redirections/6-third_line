@@ -1,0 +1,8 @@
+#!/bin/bash
+# This script displays the third line of the file iacta
+
+# Read the first three lines of the file into an array
+mapfile -t -n 3 lines < iacta
+
+# Print the third element of the array (the third line of the file)
+echo "${lines[2]}"
