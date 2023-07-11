@@ -1,9 +1,2 @@
 #!/bin/bash
-echo "Local variables:"
-set
-echo
-echo "Environment variables:"
-env
-echo
-echo "Functions:"
-declare -F
+declare
