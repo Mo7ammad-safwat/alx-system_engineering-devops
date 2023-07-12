@@ -1,0 +1,2 @@
+#!/bin/bash
+Øecho $(echo "ibase=2; $BINARY" | bc)
