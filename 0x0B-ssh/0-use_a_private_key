@@ -1,5 +1,4 @@
 #!/bin/bash
-# uses ssh to connect to your server using
-# the private key ~/.ssh/school with the user ubuntu
+# Connect to the server using SSH with a specific private key and user ubuntu
 
-ssh -i ~/.ssh/id_rsa.pub ubuntu@54.236.52.81
+ssh -i ~/.ssh/school ubuntu@35.153.16.118
