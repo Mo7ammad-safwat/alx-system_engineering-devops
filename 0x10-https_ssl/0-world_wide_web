@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Function to display information about the subdomain
+display_info() {
+    local domain=$1
+    local subdomain=$2
+    # Use dig to query the DNS record for the subdomain
+    local record=$(dig +short $subdomain.$domain A)
+    if [[ -z "$record" ]]; then
+        echo "The subdomain $subdomain does not have an A record or does not exist."
+    else
+        echo "The subdomain $subdomain is a A record and points to $record"
+    fi
+}
+
+# Check if the domain argument is provided
+if [[ -z "$1" ]]; then
+    echo "Error: Domain name not provided."
+    exit 1
+fi
+
+domain=$1
+
+# Check if the subdomain argument is provided
+if [[ -z "$2" ]]; then
+    # If only the domain is provided, query for predefined subdomains
+    for sub in www lb-01 web-01 web-02; do
+        display_info $domain $sub
+    done
+else
+    # If the subdomain is also provided, query for that specific subdomain
+    subdomain=$2
+    display_info $domain $subdomain
+fi
