@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Configures a server to listening on port 80
+cp -f /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
+rm /run/nginx.pid
