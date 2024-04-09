@@ -1,18 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Configures a new Ubuntu machine
 
-# Install Nginx
-apt-get update
-apt-get install nginx -y
-
-# Create a custom HTML file
-echo "Hello World!" > /var/www/html/index.html
-
-# Ensure Nginx is set to start on boot and start it now (without systemctl)
-update-rc.d nginx defaults
-service nginx start || true # In case it's already running
-
-# (Optional) If Nginx is already running and a reload is needed to apply any configuration changes.
-service nginx reload
-
-# Note: This script assumes Nginx is not already installed or is in a state that can be safely restarted.
-# If you're working with an existing setup, you might need to adjust the script accordingly.
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+sudo service nginx restart
