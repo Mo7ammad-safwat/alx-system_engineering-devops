@@ -34,10 +34,14 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend https_front
-    bind *:443 ssl crt /etc/letsencrypt/live/www.mohammad-al-ashmawy.tech.pem 
-    default_backend web_servers
+frontend http
+        bind *:80
+        bind *:443 ssl crt /etc/haproxy/certs/www.mohammad-al-ashmawy.tech.pem
+        redirect scheme https if !{ ssl_fc }
+        default_backend web-backend
 
-backend web_servers
-    balance roundrobin
-    server web1 54.164.149.90:80 check
+backend web-backend
+	redirect scheme https code 301 if !{ ssl_fc }
+        balance roundrobin
+        server 355534-web-01 54.164.149.90:80 check
+        server 355534-web-02 54.164.149.90:80 check

@@ -1,34 +1,16 @@
 #!/usr/bin/env bash
+# script that will display information about subdomains
 
-# Function to display information about the subdomain
-display_info() {
-    local domain=$1
-    local subdomain=$2
-    # Use dig to query the DNS record for the subdomain
-    local record=$(dig +short $subdomain.$domain A)
-    if [[ -z "$record" ]]; then
-        echo "The subdomain $subdomain does not have an A record or does not exist."
-    else
-        echo "The subdomain $subdomain is a A record and points to $record"
-    fi
+domain_info () {
+    line=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | awk '{print $4 " " $5}')
+    echo "$2 $line" | tr '\n' ' ' | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
 }
 
-# Check if the domain argument is provided
-if [[ -z "$1" ]]; then
-    echo "Error: Domain name not provided."
-    exit 1
-fi
-
-domain=$1
-
-# Check if the subdomain argument is provided
-if [[ -z "$2" ]]; then
-    # If only the domain is provided, query for predefined subdomains
-    for sub in www lb-01 web-01 web-02; do
-        display_info $domain $sub
-    done
-else
-    # If the subdomain is also provided, query for that specific subdomain
-    subdomain=$2
-    display_info $domain $subdomain
+if [ "$#" == 1 ]; then
+    domain_info "$1" "www"
+    domain_info "$1" "lb-01"
+    domain_info "$1" "web-01"
+    domain_info "$1" "web-02"
+elif [ "$#" == 2 ]; then
+    domain_info "$1" "$2"
 fi

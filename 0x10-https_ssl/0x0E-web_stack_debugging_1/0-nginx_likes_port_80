@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+# Step 1: Install Nginx (if not already installed)
+sudo apt-get update
+sudo apt-get install nginx -y
+
+# Step 2: (Optional) No specific configuration step is added here as by default,
+# Nginx listens on port 80. If there's a custom configuration, it can be added here.
+
+# Step 3: Ensure Nginx is running
+sudo systemctl enable nginx  # Enable Nginx to start on boot
+sudo systemctl start nginx   # Start Nginx
+sudo systemctl restart nginx # Restart Nginx to apply any changes (safe if it's already running)
+
+# Optional: Confirm that Nginx is listening on port 80
+netstat -tuln | grep ':80'
