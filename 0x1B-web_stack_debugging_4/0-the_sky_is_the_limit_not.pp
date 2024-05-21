@@ -1,12 +1,12 @@
 # Fix stack so that we get to 0 failed requests
 
 exec { 'sed':
-  command => "sed -i 's/worker_connections .*/worker_connections 1024;/' /etc/nginx/nginx.conf",
-  path    => ['/bin', '/usr/bin'],
+  provider => 'shell',
+  command  => "sudo sed -i 's/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/' /etc/default/nginx",
+  before   => Exec['restart'],
 }
 
 exec { 'restart':
-  command     => 'systemctl restart nginx',
-  path        => ['/bin', '/usr/bin'],
-  subscribe   => Exec['sed'],
+  provider => 'shell',
+  command  => 'sudo service nginx restart',
 }
